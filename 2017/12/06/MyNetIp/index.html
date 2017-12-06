@@ -4,24 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>My New Post | javaWeb微操作</title>
+    <title>多线程获取局域网内的ip | javaWeb微操作</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Aiks Yuan">
     
 
     
-    <meta name="description" content="��һƪ: test~">
+    <meta name="description" content="package com.aiks.ip; import java.net.InetAddress;import java.net.UnknownHostException;import java.util.concurrent.locks.Lock;import java.util.concurrent.locks.R">
+<meta name="keywords" content="拿篇以前的家底~~">
 <meta property="og:type" content="article">
-<meta property="og:title" content="My New Post">
-<meta property="og:url" content="http://aiks.online/2017/12/06/My-New-Post/index.html">
+<meta property="og:title" content="多线程获取局域网内的ip">
+<meta property="og:url" content="http://aiks.online/2017/12/06/MyNetIp/index.html">
 <meta property="og:site_name" content="javaWeb微操作">
-<meta property="og:description" content="��һƪ: test~">
+<meta property="og:description" content="package com.aiks.ip; import java.net.InetAddress;import java.net.UnknownHostException;import java.util.concurrent.locks.Lock;import java.util.concurrent.locks.ReentrantLock; /**  实测可用 获取当前局域网的所有ip和主机名">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2017-12-06T06:25:32.515Z">
+<meta property="og:updated_time" content="2017-12-06T08:11:07.681Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="My New Post">
-<meta name="twitter:description" content="��һƪ: test~">
+<meta name="twitter:title" content="多线程获取局域网内的ip">
+<meta name="twitter:description" content="package com.aiks.ip; import java.net.InetAddress;import java.net.UnknownHostException;import java.util.concurrent.locks.Lock;import java.util.concurrent.locks.ReentrantLock; /**  实测可用 获取当前局域网的所有ip和主机名">
 
     
     <link rel="alternative" href="/atom.xml" title="javaWeb微操作" type="application/atom+xml">
@@ -81,7 +82,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/12/06/My-New-Post/" title="My New Post" itemprop="url">My New Post</a>
+      <a href="/2017/12/06/MyNetIp/" title="多线程获取局域网内的ip" itemprop="url">多线程获取局域网内的ip</a>
   </h1>
   <p class="article-author">By
        
@@ -101,12 +102,200 @@
 		
 		</div>
 		
-		<p>��һƪ: test~</p>
+		<p>package com.aiks.ip;</p>
+<p>import java.net.InetAddress;<br>import java.net.UnknownHostException;<br>import java.util.concurrent.locks.Lock;<br>import java.util.concurrent.locks.ReentrantLock;</p>
+<p>/**</p>
+<ul>
+<li>实测可用</li>
+<li>获取当前局域网的所有ip和主机名</li>
+<li><p>@author 18061<br><em>
+</em>/<br>public class MyNetIp {<br> public static void main(String[] args) {</p>
+<pre><code>NewGetIp1 task1 = new NewGetIp1();
+Thread thread1 = new Thread(task1, &quot;线程1&quot;);
+thread1.start();
+
+NewGetIp2 task2 = new NewGetIp2();
+Thread thread2 = new Thread(task2, &quot;线程2&quot;);
+thread2.start();
+
+NewGetIp3 task3 = new NewGetIp3();
+Thread thread3 = new Thread(task3, &quot;线程3&quot;);
+thread3.start();
+
+NewGetIp4 task4 = new NewGetIp4();
+Thread thread4 = new Thread(task4, &quot;线程4&quot;);
+thread4.start();
+</code></pre><p> }<br>}</p>
+</li>
+</ul>
+<p>class NewGetIp1 implements Runnable {<br>    private int num = 255;<br>    Lock l = new ReentrantLock();<br>    boolean flag=true;</p>
+<pre><code>@Override
+public void run() {
+    // TODO Auto-generated method stub
+    try {
+
+        while (true) {
+            l.lock();
+            if (num &gt; 180) {
+
+                String name = &quot;192.168.37.&quot;;
+                name = name + Integer.toString(num);
+                num--;
+
+                // System.out.println(name);
+                InetAddress ia = InetAddress.getByName(name);
+                String ip = ia.getHostAddress();
+                String hostName = ia.getHostName();
+                if (!ip.toString().equals(hostName.toString())) {
+
+                    System.out.println(Thread.currentThread().getName()
+                            + &quot;===&quot; + ip + &quot;=====&quot; + hostName);
+                    System.out.println(&quot;-------------------------&quot;);
+                } else {
+                    //System.out.println(&quot;*****&quot;);
+                }
+
+
+            }else  if(flag){
+                //这里定义标记,如果该线程完成任务.标记设置为false
+                System.out.println(Thread.currentThread().getName()+&quot;的总数:&quot;+count);
+                flag=false;
+            }
+            l.unlock();
+        }
+
+    } catch (UnknownHostException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+}
+</code></pre><p>}</p>
+<p>class NewGetIp2 implements Runnable {<br>    private int num = 180;<br>    Lock l = new ReentrantLock();<br>    boolean flag=true;</p>
+<pre><code>@Override
+public void run() {
+    // TODO Auto-generated method stub
+    try {
+
+        while (true) {
+            l.lock();
+            if (num &gt; 120) {
+
+                String name = &quot;192.168.37.&quot;;
+                name = name + Integer.toString(num);
+                num--;
+
+                // System.out.println(name);
+                InetAddress ia = InetAddress.getByName(name);
+                String ip = ia.getHostAddress();
+                String hostName = ia.getHostName();
+                if (!ip.toString().equals(hostName.toString())) {
+                    System.out.println(Thread.currentThread().getName()
+                            + &quot;===&quot; + ip + &quot;=====&quot; + hostName);
+                    System.out.println(&quot;-------------------------&quot;);
+                } else {
+                    //System.out.println(&quot;*****&quot;);
+                }
+
+
+            }else  if(flag){
+                System.out.println(Thread.currentThread().getName()+&quot;的总数:&quot;+count);
+                flag=false;
+            }
+            l.unlock();
+        }
+
+    } catch (UnknownHostException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+}
+</code></pre><p>}</p>
+<p>class NewGetIp3 implements Runnable {<br>    private int num = 120;<br>    Lock l = new ReentrantLock();<br>    boolean flag= true;</p>
+<pre><code>@Override
+public void run() {
+    // TODO Auto-generated method stub
+    try {
+
+        while (true) {
+            l.lock();
+            if (num &gt; 60) {
+
+                String name = &quot;192.168.37.&quot;;
+                name = name + Integer.toString(num);
+                num--;
+
+                // System.out.println(name);
+                InetAddress ia = InetAddress.getByName(name);
+                String ip = ia.getHostAddress();
+                String hostName = ia.getHostName();
+                if (!ip.toString().equals(hostName.toString())) {
+
+                    System.out.println(Thread.currentThread().getName()
+                            + &quot;===&quot; + ip + &quot;=====&quot; + hostName);
+                    System.out.println(&quot;-------------------------&quot;);
+                } else {
+                    //System.out.println(&quot;*****&quot;);
+                }
+
+
+            }else if(flag){
+                System.out.println(Thread.currentThread().getName()+&quot;的总数:&quot;+count);
+                flag=false;
+            }
+            l.unlock();
+        }
+
+    } catch (UnknownHostException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+}
+</code></pre><p>}</p>
+<p>class NewGetIp4 implements Runnable {<br>    private int num = 60;<br>    Lock l = new ReentrantLock();<br>    boolean flag=true;<br>    @Override<br>    public void run() {<br>        // TODO Auto-generated method stub<br>        try {</p>
+<pre><code>        while (true) {
+            l.lock();
+            if (num &gt; 0) {
+
+                String name = &quot;192.168.37.&quot;;
+                name = name + Integer.toString(num);
+                num--;
+
+                // System.out.println(name);
+                InetAddress ia = InetAddress.getByName(name);
+                String ip = ia.getHostAddress();
+                String hostName = ia.getHostName();
+                if (!ip.toString().equals(hostName.toString())) {
+
+                    System.out.println(Thread.currentThread().getName()
+                            + &quot;===&quot; + ip + &quot;=====&quot; + hostName);
+                    System.out.println(&quot;-------------------------&quot;);
+                } else {
+                    //System.out.println(&quot;*****&quot;);
+                }
+
+            }else  if(flag){
+                System.out.println(Thread.currentThread().getName()+&quot;的总数:&quot;+count);
+                flag=false;
+            }
+            l.unlock();
+        }
+
+    } catch (UnknownHostException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+}
+</code></pre><p>}</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/拿篇以前的家底/">拿篇以前的家底~~</a>
+  </div>
 
 </div>
 
@@ -114,7 +303,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://aiks.online/2017/12/06/My-New-Post/" data-title="My New Post | javaWeb微操作" data-tsina="" class="share clearfix">
+	  <div data-url="http://aiks.online/2017/12/06/MyNetIp/" data-title="多线程获取局域网内的ip | javaWeb微操作" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -127,11 +316,19 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2017/12/06/My-New-Post/" title="My New Post">
+  <strong>上一篇：</strong><br/>
+  <span>
+  My New Post</span>
+</a>
+</div>
+
 
 <div class="next">
-<a href="/2017/12/06/MyNetIp/"  title="多线程获取局域网内的ip">
+<a href="/2017/12/06/第一篇/"  title="">
  <strong>下一篇：</strong><br/> 
- <span>多线程获取局域网内的ip
+ <span>(no title)
 </span>
 </a>
 </div>
