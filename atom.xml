@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>javaWeb微操作</title>
+  
+  <subtitle>愿历尽千帆,归来仍少年</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://aiks.online/"/>
+  <updated>2017-12-06T16:23:37.746Z</updated>
+  <id>http://aiks.online/</id>
+  
+  <author>
+    <name>Aiks Yuan</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>My New Post</title>
+    <link href="http://aiks.online/2017/12/06/My-New-Post/"/>
+    <id>http://aiks.online/2017/12/06/My-New-Post/</id>
+    <published>2017-12-06T06:24:26.000Z</published>
+    <updated>2017-12-06T16:23:37.746Z</updated>
+    
+    <content type="html"><![CDATA[<p>欢迎来到Aiks的博客,手机号:18061993378,微信Yuan363025</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;欢迎来到Aiks的博客,手机号:18061993378,微信Yuan363025&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>多线程获取局域网内的ip</title>
+    <link href="http://aiks.online/2017/12/06/MyNetIp/"/>
+    <id>http://aiks.online/2017/12/06/MyNetIp/</id>
+    <published>2017-12-06T06:24:26.000Z</published>
+    <updated>2017-12-06T08:11:07.681Z</updated>
+    
+    <content type="html"><![CDATA[<p>package com.aiks.ip;</p><p>import java.net.InetAddress;<br>import java.net.UnknownHostException;<br>import java.util.concurrent.locks.Lock;<br>import java.util.concurrent.locks.ReentrantLock;</p><p>/**</p><ul><li>实测可用</li><li>获取当前局域网的所有ip和主机名</li><li><p>@author 18061<br><em></em>/<br>public class MyNetIp {<br> public static void main(String[] args) {</p><pre><code>NewGetIp1 task1 = new NewGetIp1();Thread thread1 = new Thread(task1, &quot;线程1&quot;);thread1.start();NewGetIp2 task2 = new NewGetIp2();Thread thread2 = new Thread(task2, &quot;线程2&quot;);thread2.start();NewGetIp3 task3 = new NewGetIp3();Thread thread3 = new Thread(task3, &quot;线程3&quot;);thread3.start();NewGetIp4 task4 = new NewGetIp4();Thread thread4 = new Thread(task4, &quot;线程4&quot;);thread4.start();</code></pre><p> }<br>}</p></li></ul><p>class NewGetIp1 implements Runnable {<br>    private int num = 255;<br>    Lock l = new ReentrantLock();<br>    boolean flag=true;</p><pre><code>@Overridepublic void run() {    // TODO Auto-generated method stub    try {        while (true) {            l.lock();            if (num &gt; 180) {                String name = &quot;192.168.37.&quot;;                name = name + Integer.toString(num);                num--;                // System.out.println(name);                InetAddress ia = InetAddress.getByName(name);                String ip = ia.getHostAddress();                String hostName = ia.getHostName();                if (!ip.toString().equals(hostName.toString())) {                    System.out.println(Thread.currentThread().getName()                            + &quot;===&quot; + ip + &quot;=====&quot; + hostName);                    System.out.println(&quot;-------------------------&quot;);                } else {                    //System.out.println(&quot;*****&quot;);                }            }else  if(flag){                //这里定义标记,如果该线程完成任务.标记设置为false                System.out.println(Thread.currentThread().getName()+&quot;的总数:&quot;+count);                flag=false;            }            l.unlock();        }    } catch (UnknownHostException e) {        // TODO Auto-generated catch block        e.printStackTrace();    }}</code></pre><p>}</p><p>class NewGetIp2 implements Runnable {<br>    private int num = 180;<br>    Lock l = new ReentrantLock();<br>    boolean flag=true;</p><pre><code>@Overridepublic void run() {    // TODO Auto-generated method stub    try {        while (true) {            l.lock();            if (num &gt; 120) {                String name = &quot;192.168.37.&quot;;                name = name + Integer.toString(num);                num--;                // System.out.println(name);                InetAddress ia = InetAddress.getByName(name);                String ip = ia.getHostAddress();                String hostName = ia.getHostName();                if (!ip.toString().equals(hostName.toString())) {                    System.out.println(Thread.currentThread().getName()                            + &quot;===&quot; + ip + &quot;=====&quot; + hostName);                    System.out.println(&quot;-------------------------&quot;);                } else {                    //System.out.println(&quot;*****&quot;);                }            }else  if(flag){                System.out.println(Thread.currentThread().getName()+&quot;的总数:&quot;+count);                flag=false;            }            l.unlock();        }    } catch (UnknownHostException e) {        // TODO Auto-generated catch block        e.printStackTrace();    }}</code></pre><p>}</p><p>class NewGetIp3 implements Runnable {<br>    private int num = 120;<br>    Lock l = new ReentrantLock();<br>    boolean flag= true;</p><pre><code>@Overridepublic void run() {    // TODO Auto-generated method stub    try {        while (true) {            l.lock();            if (num &gt; 60) {                String name = &quot;192.168.37.&quot;;                name = name + Integer.toString(num);                num--;                // System.out.println(name);                InetAddress ia = InetAddress.getByName(name);                String ip = ia.getHostAddress();                String hostName = ia.getHostName();                if (!ip.toString().equals(hostName.toString())) {                    System.out.println(Thread.currentThread().getName()                            + &quot;===&quot; + ip + &quot;=====&quot; + hostName);                    System.out.println(&quot;-------------------------&quot;);                } else {                    //System.out.println(&quot;*****&quot;);                }            }else if(flag){                System.out.println(Thread.currentThread().getName()+&quot;的总数:&quot;+count);                flag=false;            }            l.unlock();        }    } catch (UnknownHostException e) {        // TODO Auto-generated catch block        e.printStackTrace();    }}</code></pre><p>}</p><p>class NewGetIp4 implements Runnable {<br>    private int num = 60;<br>    Lock l = new ReentrantLock();<br>    boolean flag=true;<br>    @Override<br>    public void run() {<br>        // TODO Auto-generated method stub<br>        try {</p><pre><code>        while (true) {            l.lock();            if (num &gt; 0) {                String name = &quot;192.168.37.&quot;;                name = name + Integer.toString(num);                num--;                // System.out.println(name);                InetAddress ia = InetAddress.getByName(name);                String ip = ia.getHostAddress();                String hostName = ia.getHostName();                if (!ip.toString().equals(hostName.toString())) {                    System.out.println(Thread.currentThread().getName()                            + &quot;===&quot; + ip + &quot;=====&quot; + hostName);                    System.out.println(&quot;-------------------------&quot;);                } else {                    //System.out.println(&quot;*****&quot;);                }            }else  if(flag){                System.out.println(Thread.currentThread().getName()+&quot;的总数:&quot;+count);                flag=false;            }            l.unlock();        }    } catch (UnknownHostException e) {        // TODO Auto-generated catch block        e.printStackTrace();    }}</code></pre><p>}</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;package com.aiks.ip;&lt;/p&gt;
+&lt;p&gt;import java.net.InetAddress;&lt;br&gt;import java.net.UnknownHostException;&lt;br&gt;import java.util.concurrent.locks.Lo
+      
+    
+    </summary>
+    
+    
+      <category term="拿篇以前的家底~~" scheme="http://aiks.online/tags/%E6%8B%BF%E7%AF%87%E4%BB%A5%E5%89%8D%E7%9A%84%E5%AE%B6%E5%BA%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://aiks.online/2017/12/04/hello-world/"/>
+    <id>http://aiks.online/2017/12/04/hello-world/</id>
+    <published>2017-12-03T17:28:02.022Z</published>
+    <updated>2017-12-03T17:28:02.022Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
