@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="javaWeb微操作">
 <meta property="og:description" content="package com.aiks.ip; import java.net.InetAddress;import java.net.UnknownHostException;import java.util.concurrent.locks.Lock;import java.util.concurrent.locks.ReentrantLock; /**  实测可用 获取当前局域网的所有ip和主机名">
 <meta property="og:locale" content="zh-cn">
-<meta property="og:updated_time" content="2017-12-06T08:11:07.681Z">
+<meta property="og:updated_time" content="2017-12-06T16:55:34.799Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多线程获取局域网内的ip">
 <meta name="twitter:description" content="package com.aiks.ip; import java.net.InetAddress;import java.net.UnknownHostException;import java.util.concurrent.locks.Lock;import java.util.concurrent.locks.ReentrantLock; /**  实测可用 获取当前局域网的所有ip和主机名">
@@ -50,7 +50,7 @@
 				<h1 class="site-name"><a href="/" title="javaWeb微操作">javaWeb微操作</a></h1>
 				<h2 class="blog-motto">愿历尽千帆,归来仍少年</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -66,7 +66,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:aiks.online">
 					</form>
 					
@@ -89,14 +89,14 @@
 		<a href="/about" title="Aiks Yuan" target="_blank" itemprop="author">Aiks Yuan</a>
 		
   <p class="article-time">
-    <time datetime="2017-12-06T06:24:26.000Z" itemprop="datePublished"> 發表於 2017-12-06</time>
+    <time datetime="2017-12-06T06:24:26.000Z" itemprop="datePublished"> Published 2017-12-06</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			
 		
@@ -128,34 +128,12 @@ thread4.start();
 </code></pre><p> }<br>}</p>
 </li>
 </ul>
-<p>class NewGetIp1 implements Runnable {<br>    private int num = 255;<br>    Lock l = new ReentrantLock();<br>    boolean flag=true;</p>
-<pre><code>@Override
-public void run() {
-    // TODO Auto-generated method stub
-    try {
-
-        while (true) {
-            l.lock();
-            if (num &gt; 180) {
-
-                String name = &quot;192.168.37.&quot;;
-                name = name + Integer.toString(num);
-                num--;
-
-                // System.out.println(name);
-                InetAddress ia = InetAddress.getByName(name);
-                String ip = ia.getHostAddress();
-                String hostName = ia.getHostName();
-                if (!ip.toString().equals(hostName.toString())) {
-
-                    System.out.println(Thread.currentThread().getName()
-                            + &quot;===&quot; + ip + &quot;=====&quot; + hostName);
+<p>class NewGetIp1 implements Runnable {<br>    private int num = 255;<br>    Lock l = new ReentrantLock();<br>    boolean flag=true;<br>    @Override<br>    public void run() {<br>        // TODO Auto-generated method stub<br>        try {<br>            while (true) {<br>                l.lock();<br>                if (num &gt; 180) {<br>                    String name = “192.168.37.”;<br>                    name = name + Integer.toString(num);<br>                    num–;<br>                    // System.out.println(name);<br>                    InetAddress ia = InetAddress.getByName(name);<br>                    String ip = ia.getHostAddress();<br>                    String hostName = ia.getHostName();<br>                    if (!ip.toString().equals(hostName.toString())) {<br>                        System.out.println(Thread.currentThread().getName()</p>
+<pre><code>                            + &quot;===&quot; + ip + &quot;=====&quot; + hostName);
                     System.out.println(&quot;-------------------------&quot;);
                 } else {
                     //System.out.println(&quot;*****&quot;);
-                }
-
-
+                }                
             }else  if(flag){
                 //这里定义标记,如果该线程完成任务.标记设置为false
                 System.out.println(Thread.currentThread().getName()+&quot;的总数:&quot;+count);
@@ -170,20 +148,10 @@ public void run() {
     }
 }
 </code></pre><p>}</p>
-<p>class NewGetIp2 implements Runnable {<br>    private int num = 180;<br>    Lock l = new ReentrantLock();<br>    boolean flag=true;</p>
-<pre><code>@Override
-public void run() {
-    // TODO Auto-generated method stub
-    try {
-
-        while (true) {
-            l.lock();
-            if (num &gt; 120) {
-
-                String name = &quot;192.168.37.&quot;;
+<p>class NewGetIp2 implements Runnable {<br>    private int num = 180;<br>    Lock l = new ReentrantLock();<br>    boolean flag=true;<br>    @Override<br>    public void run() {<br>        // TODO Auto-generated method stub<br>        try {<br>            while (true) {<br>                l.lock();<br>                if (num &gt; 120) {</p>
+<pre><code>                String name = &quot;192.168.37.&quot;;
                 name = name + Integer.toString(num);
                 num--;
-
                 // System.out.println(name);
                 InetAddress ia = InetAddress.getByName(name);
                 String ip = ia.getHostAddress();
@@ -194,9 +162,7 @@ public void run() {
                     System.out.println(&quot;-------------------------&quot;);
                 } else {
                     //System.out.println(&quot;*****&quot;);
-                }
-
-
+                }                
             }else  if(flag){
                 System.out.println(Thread.currentThread().getName()+&quot;的总数:&quot;+count);
                 flag=false;
@@ -316,11 +282,19 @@ public void run() {
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2017/12/06/My-New-Post/" title="My New Post">
+  <strong>上一篇：</strong><br/>
+  <span>
+  My New Post</span>
+</a>
+</div>
+
 
 <div class="next">
-<a href="/2017/12/06/My-New-Post/"  title="My New Post">
+<a href="/2017/12/04/hello-world/"  title="Hello World">
  <strong>下一篇：</strong><br/> 
- <span>My New Post
+ <span>Hello World
 </span>
 </a>
 </div>
@@ -332,22 +306,22 @@ public void run() {
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目錄</strong>
+  <strong class="toc-title">Contents</strong>
  
  
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   
 <div class="github-card">
-<p class="asidetitle">Github 名片</p>
+<p class="asidetitle">Github Card</p>
 <div class="github-card" data-github="https://github.com/wuchong" data-theme="medium"></div>
 <script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
 </div>
@@ -358,7 +332,7 @@ public void run() {
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -370,7 +344,7 @@ public void run() {
 
 
   <div class="linkslist">
-  <p class="asidetitle">友情鏈接</p>
+  <p class="asidetitle">Links</p>
     <ul>
         
           <li>
@@ -392,11 +366,11 @@ public void run() {
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
   <div class="weiboshow">
-  <p class="asidetitle">新浪微博</p>
+  <p class="asidetitle">Weibo</p>
     <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=Aiks_yuan&verifier=b3593ceb&dpc=1"></iframe>
 </div>
 
@@ -633,7 +607,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
